@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<title>3on3 Ping Calculator</title>
+<meta name="description" content="3on3 Freestyle Ping Calculator: Calculates 3on3 Freestyle Ping since it is not included in the game." />
+<meta property="og:title" content="3on3 Ping Calculator: Helping you Get The Rebound" />
+<meta property="og:url" content="http://3on3ping.com/" />
+<meta property="og:image" content="http://3on3ping.com/freddy.jpg" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="This is a simple tool to let you know your ping and how it measures up against others." />
+</head>
+
+
+<body>
+	
+	
+	<!----id title -->
+
+	<h1 id="titleInfo" title ="3on3 Ping Calculator: Calculating 3on3 Freestyle Ping since it isn't provided in game">3on3 Ping Calculator</h1>
+	<hr></hr>
+
+		
+	
+	<!----class intro -->	
+	<p class="update" >UPDATE: Due to network stack on the PS4 web browser, PS4 results are about 33% slower than results from your phone, computer, or Xbox.
+	Please keep this in mind when using either option as a reference, Thanks! - <span id="nameTitle" class ="textBox"> Alienfunbug[LMIW] </span>
+	</p>
+	
+	
+	
+	<p class="textBox" >Latency plays a crucial role in rebounding, diving, and defense.
+	This is a simple tool to let you know your ping and how it measures up against others. Enjoy!
+	</p>
+	
+	
+	<br></br>
+	<div id="pingResults" class="textBox">
+	<p class = "textBox" >We are here to help you "<span class="Underline">Get The Rebound</span>"...or whatever.</p>
+	</div>	
+
+
+
+	<table id="pingTable">
+		<tr>
+			<th>Server</th>
+			<th>Latency</th>
+			<th>Rating</th>
+		</tr>
+		
+		<tr><!--USEAST-->
+			<td><span class ="strongText">US East</span></td>
+			<td class ="latency"  id="eastLatency" 
+			server="http://dynamodb.us-east-1.amazonaws.com/">Latency</td>
+			<td id="eastLatency1" >Rating</td>
+		</tr>
+		
+		<tr><!--USWEST-->
+			<td><span class ="strongText">US West</span></td>
+			<td class = "latency"  id="westLatency"
+			server="http://dynamodb.us-west-1.amazonaws.com/">Latency</td>
+			<!--http://dynamodb.us-west-2.amazonaws.com/-->
+			<td id="westLatency1" >Rating</td>
+		</tr>
+		
+		<tr><!--ASIA2-->
+			<td><span class ="strongText">Asia 2</span></td>
+			<td class = "latency"  id="asiaLatency"
+			server="http://dynamodb.ap-northeast-1.amazonaws.com/">Latency</td>
+			<td id="asiaLatency1" >Rating</td>
+		</tr>
+		
+		<tr><!--EUROPE-->
+			<td><span class ="strongText">Europe</span></td>
+			<td class = "latency" id="euLatency"
+			server="http://dynamodb.eu-central-1.amazonaws.com/">Latency</td>
+			<td id="euLatency1" >Rating</td>
+			<td id='imageCell'></td>
+		</tr>
+	</table>
+	<br></br>
+	
+	<button id="startButton">  Start Ping </button>
+
+
+	<br></br>
+	
+	
+	<div class="importantText">
+	<img src="freddy.jpg" 
+	alt="Freddy was here"  width="650px">
+	</div>
+	
+	<br></br>
+		
+		
+	<p class="textBox"> <span id="nameTitle"> Background: </span> Using windows ICS and 
+	<a href="https://www.wireshark.org/">Wireshark</a>, I was able
+	to locate the IPs for each of the 3on3 servers. To avoid creating additional
+	traffic with this website, I located the closest node on each
+	<a href="http://docs.aws.amazon.com/general/latest/gr/rande.html#ddb_region"> Amazon WebServer </a>. 
+	From there it was <a href="https://www.w3schools.com/">W3schools</a>,
+	tons of google, stackoverflow, and some great people from "TheCodingDen" Discord. 
+	I am by no means a web dev but I hope this tool helps!
+	
+	
+	<br></br>
+	Also, keep in mind, these results may be off by 5-15 ms. Thanks!
+<br></br>
+More changes coming soon!!!!!!!!!!!!!!!!!
+	<p>
+	<br></br>
+	<!-- test print area -->
+	<p id="demo"> 
+	<p>
+	<br></br>
+
+
+<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+	<script>
+	
+	var startButton = $("#startButton");
+	
+	//prevent spam pings
+	function disableStartButton(){
+		startButton.attr("disabled", "disabled");
+	}
+	
+	
+	// enable button
+	function enableStartButton(){
+		startButton.removeAttr("disabled");
+	}
+	
+	
+	//get start and end time
+	function currentTimeMillis(){
+		return (new Date()).getTime();
+	}
+	
+	
+	//credit to Mike Leonhard for image RTT technique
+	function getServers(){
+		disableStartButton();
+		$("#eastLatency1").text("Cleared"); $("#eastLatency1").css("color", "Gray");
+		$("#euLatency1").text("Cleared"); $("#euLatency1").css("color", "Gray");
+		$("#westLatency1").text("Cleared"); $("#westLatency1").css("color", "Gray");
+		$("#asiaLatency1").text("Cleared"); $("#asiaLatency1").css("color", "Gray");
+		var serverInfo = $(".latency").toArray(); $("#eastLatency1").css("color", "Gray");
+		serverInfo.reverse();
+		loadNextServer(serverInfo);
+	}
+	
+	
+	function loadNextServer(serverInfo){
+		var next = serverInfo.pop();
+		if(next){
+			var region = next.id;
+			var url = next.getAttribute("server");
+			connecting(next, region, url, serverInfo);
+		} else {
+			enableStartButton();
+		}
+	}
+	
+	
+	function connecting(next, region, url, serverInfo) {
+		$(next).html("connecting");
+		ping_endpoint(url, function() {
+			pingServers(next, region, url, serverInfo);
+		});
+	}
+	
+	
+	function pingServers(next, region, url, serverInfo){
+		$(next).html("pinging");
+		var startTime = currentTimeMillis();
+		ping_endpoint(url, function(){
+			finishPing(startTime, next, region, url, serverInfo);
+		});
+	
+	}
+	
+	
+	function finishPing(startTime, next, region, url, serverInfo){
+		var endTime = currentTimeMillis();
+		var RTT = endTime - startTime;
+		var RTToutput = "" + RTT + " ms";
+		$(next).html(RTToutput);
+		var rating = region+"1";
+		
+		$('#'+rating).html(ratePing(RTT,rating));
+		//document.getElementById("demo").innerHTML = ratePing(RTT);
+		loadNextServer(serverInfo);
+	}
+	
+	
+	function ratePing(RTT,rating){
+		if (RTT < 40){
+			$('#'+rating).css("color", "#00FF00", "font-weight","bold");
+			$('#'+rating).css("font-weight", "bold");
+			return "EXCELLENT";
+		} else if (RTT < 56){
+			$('#'+rating).css("color", "#90EE90", "font-weight","bold");
+			$('#'+rating).css("font-weight", "bold");
+			return "GOOD";
+		} else if (RTT < 100){
+			$('#'+rating).css("color", "#FF8C00", "font-weight","bold");
+			$('#'+rating).css("font-weight", "bold");
+			return "FAIR";
+		} else {
+			$('#'+rating).css("color", "#FF4500");
+			$('#'+rating).css("font-weight", "bold");
+			return "POOR";
+		}
+	}
+	
+	var imageCell = $("#imageCell")
+	function ping_endpoint(url, onComplete) {
+	    var randomString = Math.floor(Math.random()*0xFFFFFFFFFFFFFFFF).toString(36);
+	    var targetUrl = url + "ping?x=" + randomString;
+	    imageCell.empty();
+	    imageCell.html("<img id='pingImage' style='display: none'>");
+	    var pingImage = $("#pingImage");
+	    pingImage.error(onComplete);
+	    pingImage.attr("src", targetUrl);
+	}
+	
+	$(document).ready(function(){
+		$("#startButton").click(getServers);
+	
+	});
+	
+</script>
+		
+		
+<footer>
+	  <p>3on3 Freestyle and all of its characters and likenesses are © JOYCITY Corporation</p>
+
+</footer>
+
+
+</body>
+</html>
