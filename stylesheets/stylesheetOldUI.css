@@ -1,0 +1,135 @@
+<head>
+<style>
+
+h1{
+	
+}
+
+h2{	
+
+}
+
+body{
+	font-family: 'Roboto';
+}
+
+
+#titleInfo{
+	color: #3CB371;
+	padding: 2px;
+	text-align: left;
+	font-size: 60px;
+}
+
+#nameTitle{
+	color: #3CB371;
+}
+.textBox{ 
+	width: 650px;
+	border: none;
+	font-size: 18px;
+	line-height: 1.4;
+}
+
+.update{ 
+	width: 650px;
+	border: none;
+	font-size: 24px;
+	line-height: 1.4;
+	color: red;
+}
+
+.Underline {
+	text-decoration: none;
+	border-bottom: 4px solid #3CB371;
+}
+
+.strongText {
+	color: #4CAF50;
+	font-weight: 900;
+}
+
+table{
+	font-family:;
+	border-collapse: collapse;
+	width: 750px;
+}
+
+th{
+	font-size:26px;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-right: 80px;
+}
+td{
+	border: none;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 80px;
+
+}
+tr:nth-child(even){
+	background-color:#dddddd;
+}
+
+
+#startButton {
+	background-color: #3CB371;
+	border: none;
+	color: white;
+	padding:15px 35px;
+	text-align: center;
+	text-decoration: none;
+	display:inline-block;;
+	font-size:26px;
+	margin:
+	cursor:;
+	border-radius:12px;	
+}
+
+/*
+#pingButton {
+	background-color: #3CB371;
+	border: none;
+	color: white;
+	padding:15px 35px;
+	text-align: center;
+	text-decoration: none;
+	display:inline-block;;
+	font-size:26px;
+	margin:
+	cursor:;
+	border-radius:12px;
+}
+
+#top {
+	background-color: ffffff;
+	color: red;
+	padding:60px;
+	text-align: center;
+	font-size:60px;
+	font-family:courier;
+} 
+
+.importantText {
+	background-color: ffffff;
+	color: green;
+	padding: 20px;
+	text-align: center;
+}
+	
+.importantTextLarge {
+	background-color: ffffff;
+	color: red;
+	padding: 20px;
+	text-align: center;
+}
+	
+*/
+
+
+
+</style>
+</head>

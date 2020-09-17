@@ -1,0 +1,205 @@
+<head>
+<style>
+
+h1{
+	
+}
+
+h2{	
+
+}
+
+body{
+	margin: 0%;
+	font-family: 'Roboto';
+	color: #eeeeee;
+	background: canvas(c);
+	max-width: 99%;
+	
+}
+
+
+#titleInfo{
+	color: #3CB371;
+	padding: 0px;
+	text-align: center;
+	font-size: 60px;
+
+}
+
+#nameTitle{
+	color: #3CB371;
+}
+.textBox{ 
+	max-width: 99%;
+	border: none;
+	font-size: 18px;
+	line-height: 1.4;
+	padding-left: 8px;
+	padding-right: 20px;
+	text-align: center;
+}
+
+.update{ 
+	max-width: 99%;
+	border: none;
+	font-size: 24px;
+	line-height: 1.4;
+	color: red;
+}
+
+.Underline {
+	text-decoration: none;
+	border-bottom: 4px solid #3CB371;
+}
+
+.strongText {
+	color: #4CAF50;
+	font-weight: 900;
+}
+
+#pingTable{
+	/* font-family:; */
+
+	border-collapse: separate;
+	max-width: 99%;
+	margin: 0 auto;
+	padding-right: 16px;
+	padding-left: 2px;
+}
+
+th{
+	font-size:26px;
+	background-color: #555;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+	padding-left: 40px;
+}
+td{
+	border: none;
+	text-align: left;
+	color: #3CB371;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 20px;
+	padding-left: 10px;
+
+}
+tr:nth-child(even){
+	background-color:#dddddd;
+}
+
+tr:nth-child(odd){
+	background-color:#eee;
+}
+
+#startButton {
+
+	background-color: #3CB371;
+	border: none;
+	color: white;
+	padding:15px 45px;
+	text-align: center;
+	text-decoration: none;
+	display:inline-block;
+	font-size:26px;
+	margin:0 %;
+	border-radius:22px;	
+}
+
+#startButtonDiv{
+	text-align: center;
+}
+
+#pingTableDiv{
+	text-align: center;
+	display:block;
+
+}
+
+#imageCell{
+
+	display:none;
+}
+
+
+
+
+
+
+
+#mainImage{
+	text-align: center;
+	margin: 0 auto;
+
+
+
+}
+
+img {
+	border-radius:8px;	
+	max-width:99%; 
+
+	border: none;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 1px;
+	padding-left: 2px;
+	margin: 0 auto;
+}
+
+
+/*
+#pingButton {
+	background-color: #3CB371;
+	border: none;
+	color: white;
+	padding:15px 35px;
+	text-align: center;
+	text-decoration: none;
+	display:inline-block;;
+	font-size:26px;
+	margin:
+	cursor:;
+	border-radius:12px;
+}
+
+#top {
+	background-color: ffffff;
+	color: red;
+	padding:60px;
+	text-align: center;
+	font-size:60px;
+	font-family:courier;
+} 
+
+.importantText {
+	background-color: ffffff;
+	color: green;
+	padding: 20px;
+	text-align: center;
+}
+	
+.importantTextLarge {
+	background-color: ffffff;
+	color: red;
+	padding: 20px;
+	text-align: center;
+}
+	
+*/
+
+canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -9999;
+  }
+
+</style>
+</head>
