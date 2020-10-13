@@ -1,47 +1,41 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
-<title>3on3 Ping Calculator</title>
-<meta name="description" content="3on3 Freestyle Ping Calculator: Calculates 3on3 Freestyle Ping since it is not included in the game." />
-<meta property="og:title" content="3on3 Ping Calculator: Helping you Get The Rebound" />
-<meta property="og:url" content="http://3on3ping.com/" />
-<meta property="og:image" content="http://3on3ping.com/freddy.jpg" />
-<meta property="og:type" content="article" />
-<meta property="og:description" content="This is a simple tool to let you know your ping and how it measures up against others." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="style.css"></link>
+	<title>3on3 Ping Calculator</title>
+	
+
+
+	<meta name="description" content="3on3 Freestyle Ping Calculator: Calculates 3on3 Freestyle Ping since it is not included in the game." />
+	<meta property="og:title" content="3on3 Ping Calculator: Helping you Get The Rebound" />
+	<meta property="og:url" content="http://3on3ping.com/" />
+	<meta property="og:image" content="http://3on3ping.com/wtfyl.jpg" />
+	<meta property="og:type" content="article" />
+	<meta property="og:description" content="This is a simple tool to let you know your ping and how it measures up against others." />
+
 </head>
-
-
 <body>
-	
-	
-	<!----id title -->
-
-	<h1 id="titleInfo" title ="3on3 Ping Calculator: Calculating 3on3 Freestyle Ping since it isn't provided in game">3on3 Ping Calculator</h1>
-	<hr></hr>
-
-		
-	
-	<!----class intro -->	
-	<p class="update" >UPDATE: Due to network stack on the PS4 web browser, PS4 results are about 33% slower than results from your phone, computer, or Xbox.
-	Please keep this in mind when using either option as a reference, Thanks! - <span id="nameTitle" class ="textBox"> Alienfunbug[LMIW] </span>
-	</p>
-	
-	
-	
-	<p class="textBox" >Latency plays a crucial role in rebounding, diving, and defense.
-	This is a simple tool to let you know your ping and how it measures up against others. Enjoy!
-	</p>
-	
-	
-	<br></br>
-	<div id="pingResults" class="textBox">
-	<p class = "textBox" >We are here to help you "<span class="Underline">Get The Rebound</span>"...or whatever.</p>
-	</div>	
+    
+    <!-- header showcase -->
+    <header id="showcase" class="grid">
+        <div class="bg-image"></div>
+        <div class="content-wrap">
+        <h1>3on3 Ping Calculator</h1>
+        <p>A thank you to <span style="color:#3cb371"> YuZ </span> and <span style="color:#3cb371"> Jeremy</span> for the donations, also a quick thank you to <span style="color:#3cb371"> Fret </span> some upcoming changes I shouldve already implemented -  Alienfunbug[LMIW]
+        </p>
 
 
+        <a href="#section-b"  class="btn" id="startButton"> Start Ping</a>
 
-	<table id="pingTable">
+    </div>
+    </header>
+
+    <p id="currentLocalTimeA"></p>
+    <!-- initial result table -->
+    <div class="card">
+	<table id="pingTable" >
 		<tr>
 			<th>Server</th>
 			<th>Latency</th>
@@ -77,68 +71,152 @@
 			<td id="euLatency1" >Rating</td>
 			<td id='imageCell'></td>
 		</tr>
-	</table>
-	<br></br>
-	
-	<button id="startButton">  Start Ping </button>
+    </table>
+</div>
+ 
+    
+
+    <!-- main showcase -->
+    <main id="main">
+        <!-- section a -->
+        <section id="section-a" class="grid">
+            <div class="content-wrap">
+                <h2 class="content-title">New Ping Site Changes</h2>
+                <p>I've received a lot of inquiry about latency fluctuating (natural) as well as details on people who could be fabricating about their ping. Hopefully the new graph feature and time stamps can help users deal with both of these issues. Additionally, if you don't like the new changes, the old websites are still up and running at <a href="http://3on3ping.com/version1">3on3ping.com/version1</a> and <a href="http://3on3ping.com/version2">3on3ping.com/version2</a> Enjoy!</p>
+                <br>
+            </div>
+        </section>
+
+        <!-- section b -->
+        <section id="section-b" class="grid">
+        <ul>
+            <li>
+                <div class="card">
+                  
+                   
+                    <div class="card-content">
+                    <h3 class="card-title" id="homeServer"> Pinging Closest Server:  <span id = "homeServerDetail" span style="color:#3cb371" > </span> </h3>
+                    <p>This chart navigates to the lowest ping response server. Ping responses are displayed over approximately a ten second period for a more accurate depiction of your latency. If you feel that it pulled the wrong server in error, please rerun the ping test.</p>
+                    <p id="currentLocalTimeB"></p>
+                    <div class="card">
+                    <canvas id="myChart"></canvas>
+                    </div>
+                    <h3 id="minPing" >Mininum Ping: <span id="minPingResult" span style="color:#3cb371" ></span></h3>
+                
+                    
+                    </div>
+                </div>
+            </li>
 
 
-	<br></br>
-	
-	
-	<div class="importantText">
-	<img src="freddy.jpg" 
-	alt="Freddy was here"  width="650px">
-	</div>
-	
-	<br></br>
-		
-		
-	<p class="textBox"> <span id="nameTitle"> Background: </span> Using windows ICS and 
-	<a href="https://www.wireshark.org/">Wireshark</a>, I was able
-	to locate the IPs for each of the 3on3 servers. To avoid creating additional
-	traffic with this website, I located the closest node on each
-	<a href="http://docs.aws.amazon.com/general/latest/gr/rande.html#ddb_region"> Amazon WebServer </a>. 
-	From there it was <a href="https://www.w3schools.com/">W3schools</a>,
-	tons of google, stackoverflow, and some great people from "TheCodingDen" Discord. 
-	I am by no means a web dev but I hope this tool helps!
-	
-	
-	<br></br>
-	Also, keep in mind, these results may be off by 5-15 ms. Thanks!
-<br></br>
-More changes coming soon!!!!!!!!!!!!!!!!!
-	<p>
-	<br></br>
-	<!-- test print area -->
-	<p id="demo"> 
-	<p>
-	<br></br>
+
+        </ul>
+    </section>
 
 
+    <section id="section-c" class="grid">
+        <div class="content-wrap">
+            <h2 class="content-title"> Ping Warrior Action BB</h2>
+            <p>
+                It wouldn't be right to have this website online without having at least one ridiculous 3on3 image. Thanks to DJMA the ping lord, enjoy this photo of Christa Getting Snagged On by Kim. Max clearly wanted no part of this action.
+     
+                    <h3 class="card-title"> Kim  vs. Christa</h3>
+                    <img src="pingSnag.jpg" alt="">
+                    <div class="card-content">
+
+            </p>
+        </div>
+
+    </section>
+
+    <section id="section-d" class="grid">
+        <div class="box">
+            <h2 class="content-title">Contact Me</h2>
+            <p>If you have any questions or concerns, feel free to contact me at <a href= "mailto:alienfunbug@gmail.com"> alienfunbug@gmail.com</a> or via PSN at letsmakeitweird (though I no longer even play PS4).  If you'd like to help keep the site alive through donations. Details and a donate button have been added below</p>
+  
+        </div>  
+        <div class="box">
+            <h2 class="content-title">About This Website</h2>
+            <p>October 10th 2020, this website will be shutting down. I've spent significantly more hosting and paying for the site over the years than I've spent playing all playstation games combined. If you'd like to donate to help prevent that, the link is down below. All donations will go directly to the hosting fees, and will extend the duration of me keeping the site up.  Thanks everyone for stopping by.</p>
+          
+            <br>
+
+
+			
+
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_donations" />
+					<input type="hidden" name="business" value="NYPG2Q9K86VG4" />
+					<input type="hidden" name="item_name" value="Website Funding" />
+					<input type="hidden" name="currency_code" value="USD" />
+					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+				
+					</form>
+					
+			
+				
+        </div>
+        <br>
+   
+            
+    </section>
+    <div class="box">
+
+</div>        
+    </main>
+    
+
+    <!-- footer -->
+<footer id="main-footer" class="grid">
+
+    
+    <div> 3on3ping calculator</div>
+    
+    <div>By <a href="https://www.paypal.com/donate/?token=xmxIWRwv7lnD39xP5uCLg8H0vBXIrOH5Q019xDfHJ-JtXQ62Xq_nyUwM6_jMzNyX8IyKKW&country.x=US&locale.x=" target="_top"> Alienfunbug</a></div>
+    
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
-	<script>
+
+<script>
 	
+
+    
+
 	var startButton = $("#startButton");
+	var pingResponses = [];
+	var pingDefaultResponses = [];
+	var homeServer = "";
+	var date = new Date();
+	var lowestMeasuredPing = 9999;
 	
+	
+
+	window.onload = function(){
+	var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+};
+
+
+
 	//prevent spam pings
 	function disableStartButton(){
 		startButton.attr("disabled", "disabled");
-	}
-	
-	
+	};
+
 	// enable button
 	function enableStartButton(){
 		startButton.removeAttr("disabled");
-	}
-	
+	};
 	
 	//get start and end time
 	function currentTimeMillis(){
 		return (new Date()).getTime();
-	}
-	
-	
+	};
+
 	//credit to Mike Leonhard for image RTT technique
 	function getServers(){
 		disableStartButton();
@@ -146,11 +224,31 @@ More changes coming soon!!!!!!!!!!!!!!!!!
 		$("#euLatency1").text("Cleared"); $("#euLatency1").css("color", "Gray");
 		$("#westLatency1").text("Cleared"); $("#westLatency1").css("color", "Gray");
 		$("#asiaLatency1").text("Cleared"); $("#asiaLatency1").css("color", "Gray");
-		var serverInfo = $(".latency").toArray(); $("#eastLatency1").css("color", "Gray");
+		var serverInfo = $(".latency").toArray();
 		serverInfo.reverse();
 		loadNextServer(serverInfo);
-	}
-	
+	};
+
+	function findLowestRegion(pingArray){	
+		var index = pingArray.indexOf(Math.min(...pingArray));
+			//console.log(index);
+			switch(index){
+				case 0: 
+					homeServer = "USEast";
+					break;
+				case 1: 
+					homeServer = "USWest";
+					break;	
+				case 2: 
+					homeServer = "Asia 2";
+					break;
+				case 3: 
+					homeServer = "Europe";
+					break;
+			}
+			//console.log(homeServer);	
+			document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	};
 	
 	function loadNextServer(serverInfo){
 		var next = serverInfo.pop();
@@ -159,40 +257,45 @@ More changes coming soon!!!!!!!!!!!!!!!!!
 			var url = next.getAttribute("server");
 			connecting(next, region, url, serverInfo);
 		} else {
+			findLowestRegion(pingResponses);
+			loadDefaultServer(homeServer);
+			//console.log(pingResponses);
+			//  responses here
+			
+			//console.log(typeof pingResponses);
+			//console.log(typeof pingResponses[0]);
+			//console.log(pingDefaultResponses);
+			//update chart and graph
+			pingResponses = [];
+            lowestMeasuredPing = 9999;
 			enableStartButton();
 		}
-	}
-	
+	};
 	
 	function connecting(next, region, url, serverInfo) {
 		$(next).html("connecting");
-		ping_endpoint(url, function() {
 			pingServers(next, region, url, serverInfo);
-		});
-	}
-	
-	
+	};
+
 	function pingServers(next, region, url, serverInfo){
 		$(next).html("pinging");
 		var startTime = currentTimeMillis();
 		ping_endpoint(url, function(){
 			finishPing(startTime, next, region, url, serverInfo);
 		});
-	
-	}
-	
-	
+	};
+
 	function finishPing(startTime, next, region, url, serverInfo){
 		var endTime = currentTimeMillis();
 		var RTT = endTime - startTime;
+		pingResponses.push(RTT);
 		var RTToutput = "" + RTT + " ms";
 		$(next).html(RTToutput);
-		var rating = region+"1";
-		
+		var rating = region+"1";	
 		$('#'+rating).html(ratePing(RTT,rating));
 		//document.getElementById("demo").innerHTML = ratePing(RTT);
 		loadNextServer(serverInfo);
-	}
+	};
 	
 	
 	function ratePing(RTT,rating){
@@ -214,6 +317,7 @@ More changes coming soon!!!!!!!!!!!!!!!!!
 			return "POOR";
 		}
 	}
+
 	
 	var imageCell = $("#imageCell")
 	function ping_endpoint(url, onComplete) {
@@ -227,17 +331,128 @@ More changes coming soon!!!!!!!!!!!!!!!!!
 	}
 	
 	$(document).ready(function(){
-		$("#startButton").click(getServers);
-	
+
+
+		$("#startButton").click(function(e){
+            var linkHref = $(this).attr("href");
+     
+            e.preventDefault();
+            getServers();
+
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            1000);
+	     
+         });
 	});
 	
-</script>
-		
-		
-<footer>
-	  <p>3on3 Freestyle and all of its characters and likenesses are © JOYCITY Corporation</p>
 
-</footer>
+
+//chart scripts for specific servers
+
+function loadDefaultServer(defaultServer) {
+	
+	//console.log("enter switch statement and the DEFAULT SERVER IS" + defaultServer.toString() );
+	//console.log(defaultServer);
+	//console.log(typeof(defaultServer));
+	var url = "";
+	switch(defaultServer){
+		
+				case "USEast": 
+					url = "http://dynamodb.us-east-1.amazonaws.com/";
+					//console.log("set URL TO  EAST")
+					break;
+				case "USWest": 
+					url = "http://dynamodb.us-west-1.amazonaws.com/";
+					//console.log("set URL TO  WEST")
+					break;	
+				case "Asia 2": 
+					url = "http://dynamodb.ap-northeast-1.amazonaws.com/";
+					//console.log("set URL TO  ASIA")
+					break;
+				case "Europe": 
+					url = "http://dynamodb.eu-central-1.amazonaws.com/";
+					//console.log("set URL TO  EU")
+					break;
+			}
+
+			//console.log(typeof(url));
+			//console.log(url);
+	var pingCount;
+	for (pingCount = 0; pingCount <= 9; pingCount++){
+		setTimeout(function() { 
+			pingDefaultServer(url); updateChart(); }, 1250 * pingCount); 
+	}
+	pingDefaultResponses = [];
+
+};
+
+function pingDefaultServer(url) {
+    var startTime = currentTimeMillis();
+    ping_endpoint(url, function() {
+        finishDefaultPing(startTime, url);
+    });
+};
+
+function finishDefaultPing(startTime, url) {
+    var endTime = currentTimeMillis();
+    var RTT = endTime - startTime;
+    pingDefaultResponses.push(RTT);
+
+	
+	if (RTT < lowestMeasuredPing){
+		document.getElementById("minPingResult").innerHTML = RTT;
+		lowestMeasuredPing = RTT;
+	}
+};
+
+
+//start graphing
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+
+    // The type of chart we want to create
+    type: 'line',
+    // The data for our dataset
+    data: {
+        labels: ['ping 0','ping 1','ping 2','ping 3','ping 4', 'ping 5', 'ping 6', 'ping 7', 'ping 8', 'ping 9'],
+        datasets: [{
+            label: 'Ping Results',
+            backgroundColor: '#fff',
+            borderColor: '#eaeaea',
+			fill: false,
+            data: [],
+        }]
+    },
+    // Configuration options go here
+    options: {
+		responsive: true,
+              scales: {
+                  yAxes: [{
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Ping  (ms)',
+                      }
+                  }]
+              }
+	}
+});
+
+function updateChart() {
+	chart.data.datasets[0].data = pingDefaultResponses;
+	setTimeout(() => { chart.update(); }, 2000);
+}
+
+</script>	
+
+
+
+
+
 
 
 </body>
