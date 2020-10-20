@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link  rel="stylesheet" href="style.css"></link>
+    <link  rel="stylesheet" href="../stylesheets/style.css"></link>
 	<title>3on3 Ping Calculator</title>
 	
 
@@ -26,9 +26,15 @@
         <p>A thank you to <span style="color:#3cb371"> YuZ </span> and <span style="color:#3cb371"> Jeremy</span> for the donations, also a quick thank you to <span style="color:#3cb371"> Fret </span> some upcoming changes I shouldve already implemented -  Alienfunbug[LMIW]
         </p>
 
-
-        <a href="#section-b"  class="btn" id="startButton"> Start Ping</a>
-
+	<!-- temporarily removing auto
+		<a href="#section-b"  class="btn" id="startButton"> Auto All</a>
+	-->
+        <ul id=btns>
+            <li><a href="#section-b" class="btn" id="startWest">Ping West</a></li>
+            <li><a href="#section-b" class="btn", id="startEast">Ping East</a></li>
+			<li><a href="#section-b" class="btn", id="startEurope">Ping West</a></li>
+			<li><a href="#section-b" class="btn", id="startAsia">Ping Asia</a></li>
+        </ul>
     </div>
     </header>
 
@@ -121,7 +127,7 @@
                 It wouldn't be right to have this website online without having at least one ridiculous 3on3 image. Thanks to DJMA the ping lord, enjoy this photo of Christa Getting Snagged On by Kim. Max clearly wanted no part of this action.
      
                     <h3 class="card-title"> Kim  vs. Christa</h3>
-                    <img src="pingSnag.jpg" alt="">
+                    <img src="../images/pingSnag.jpg" alt="">
                     <div class="card-content">
 
             </p>
@@ -178,7 +184,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../dependancies/jquery-1.7.1.min.js"></script>
 
 <script>
 	
