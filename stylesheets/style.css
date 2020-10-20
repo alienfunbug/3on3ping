@@ -34,19 +34,9 @@ p {
   color: #fff;
   text-decoration: none;
   padding: 1em 2em;
-  margin: 0.25em 0;
   border: 1px solid #666;
-
+  margin: 0.5em 0;
 }
-
-#btns {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  list-style-type: none;
-  
-}
-
 
 .btn:hover {
   background: #eaeaea;
@@ -198,9 +188,4 @@ tr:nth-child(odd) {
   #section-b li {
     width: 90%;
   }
-
-  #btns {
-    flex-direction: row;
-  }
-
 }
