@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../stylesheets/stylesheet.css">
+<title>3on3 Ping Calculator</title>
+<meta name="description" content="3on3 Freestyle Ping Calculator: Calculates 3on3 Freestyle Ping since it is not included in the game." />
+<meta property="og:title" content="3on3 Ping Calculator: Helping you Get The Rebound" />
+<meta property="og:url" content="http://3on3ping.com" />
+<meta property="og:image" content="http://3on3ping.com/images/alexroger44445.jpg" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="This is a simple tool to let you know your ping and how it measures up against others." />
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+<body>
+
+
+	<!----id title -->
+
+	<h1 id="titleInfo" title ="TESTING SITE FOR UPCOMING CHANGES"> </h1>
+	
+	
+	<h1 id="titleInfo" title ="3on3 Ping Calculator: Calculating 3on3 Freestyle Ping since it isn't provided in game">3on3 Ping Calculator</h1>
+	<hr></hr>
+
+			<!---- canvas for animations -->
+  <canvas id="c" > </canvas>
+
+
+	
+	<!----class intro -->	
+	
+	<p class="textBox"  >Latency plays a crucial role in rebounding, diving, and defense.
+	This is a simple tool to let you know your ping and how it measures up against others. Enjoy! - <span id="nameTitle"> Alienfunbug[LMIW] </span>
+	
+	</p>
+	
+
+	<div id="pingResults" class="textBox">
+	<p class = "textBox" >We are here to help you "<span class="Underline">Get The Rebound</span>"...or whatever.</p>
+	</div>	
+
+<div id="pingTableDiv">  
+	<table id="pingTable">
+		<tr>
+			<th>Server</th>
+			<th>Latency</th>
+			<th>Rating</th>
+		</tr>
+		
+		<tr><!--USEAST-->
+			<td><span class ="strongText">US East</span></td>
+			<td class ="latency"  id="eastLatency" 
+			server="http://dynamodb.us-east-1.amazonaws.com/">Latency</td>
+			<td id="eastLatency1" >Rating</td>
+		</tr>
+		
+		<tr><!--USWEST-->
+			<td><span class ="strongText">US West</span></td>
+			<td class = "latency"  id="westLatency"
+			server="http://dynamodb.us-west-1.amazonaws.com/">Latency</td>
+			<!--http://dynamodb.us-west-2.amazonaws.com/-->
+			<td id="westLatency1" >Rating</td>
+		</tr>
+		
+    <tr><!--ASIA2-->
+      
+			<td><span class ="strongText">Asia 2</span></td>
+			<td class = "latency"  id="asiaLatency"
+			server="http://dynamodb.ap-northeast-1.amazonaws.com/">Latency</td>
+			<td id="asiaLatency1" >Rating</td>
+		</tr>
+		
+		<tr><!--EUROPE-->
+			<td><span class ="strongText">Europe</span></td>
+			<td class = "latency" id="euLatency"
+			server="http://dynamodb.eu-central-1.amazonaws.com/">Latency</td>
+      <td id="euLatency1" >Rating</td>
+      <td id='imageCell'></td>
+	
+		</tr>
+  </table>
+</div>
+
+	<br></br>
+  
+  <div id=startButtonDiv>
+	<button id="startButton">  Start Ping Test  </button>
+  </div>
+	
+	
+	<br></br>
+	
+	
+	<div class="importantText">
+
+  </div>
+  
+  	
+	<div id="mainImage">
+    <img src="../images/alexroger44445.jpg" 
+    alt="Main Image" >
+  </div>
+	
+	<br></br>
+		
+	<p class="textBox"> <span id="nameTitle"></span> 
+    More changes to come soon.
+    
+    
+
+	<p>
+	<br></br>
+	<!-- test print area -->
+	<p id="demo"> 
+	<p>
+	<br></br>
+
+	
+	
+	
+
+
+<script type="text/javascript" src="../dependancies/jquery-1.7.1.min.js"></script>
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-9bf952ccbbd13c245169a0a1190323a27ce073a3d304b8c0fdf421ab22794a58.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/1.0.0/anime.min.js"></script>
+<script>
+var canvas = document.getElementById("c");
+document.body.style.background = "url(" + canvas.toDataURL() + ")";
+
+var startButton = $("#startButton");
+
+//prevent spam pings
+function disableStartButton(){
+	startButton.attr("disabled", "disabled");
+}
+// enable button
+function enableStartButton(){
+	startButton.removeAttr("disabled");
+}
+
+//get start and end time
+function currentTimeMillis(){
+	return (new Date()).getTime();
+}
+
+//credit to Mike Leonhard for image RTT technique
+function getServers(){
+	disableStartButton();
+	$("#eastLatency1").text("Cleared"); $("#eastLatency1").css("color", "Gray");
+	$("#euLatency1").text("Cleared"); $("#euLatency1").css("color", "Gray");
+	$("#westLatency1").text("Cleared"); $("#westLatency1").css("color", "Gray");
+	$("#asiaLatency1").text("Cleared"); $("#asiaLatency1").css("color", "Gray");
+	var serverInfo = $(".latency").toArray(); $("#eastLatency1").css("color", "Gray");
+	serverInfo.reverse();
+	loadNextServer(serverInfo);
+}
+
+function loadNextServer(serverInfo){
+	var next = serverInfo.pop();
+	if(next){
+		var region = next.id;
+		var url = next.getAttribute("server");
+		connecting(next, region, url, serverInfo);
+	} else {
+		enableStartButton();
+	}
+}
+
+function connecting(next, region, url, serverInfo) {
+	$(next).html("connecting");
+	ping_endpoint(url, function() {
+		pingServers(next, region, url, serverInfo);
+	});
+}
+
+function pingServers(next, region, url, serverInfo){
+	$(next).html("pinging");
+	var startTime = currentTimeMillis();
+	ping_endpoint(url, function(){
+		finishPing(startTime, next, region, url, serverInfo);
+	});
+
+}
+
+function finishPing(startTime, next, region, url, serverInfo){
+	var endTime = currentTimeMillis();
+	var RTT = endTime - startTime;
+	var RTToutput = "" + RTT + " ms";
+	$(next).html(RTToutput);
+	var rating = region+"1";
+	
+	$('#'+rating).html(ratePing(RTT,rating));
+	//document.getElementById("demo").innerHTML = ratePing(RTT);
+	loadNextServer(serverInfo);
+}
+
+function ratePing(RTT,rating){
+	
+  if (RTT < 29){
+		$('#'+rating).css("color", "#0000FF", "font-weight","bold");
+		$('#'+rating).css("font-weight", "bold");
+		return "Perfect";
+  }
+  else if (RTT < 39){
+		$('#'+rating).css("color", "#00FF00", "font-weight","bold");
+		$('#'+rating).css("font-weight", "bold");
+		return "Good";
+	} else if (RTT < 56){
+		$('#'+rating).css("color", "#D4AF37", "font-weight","bold");
+		$('#'+rating).css("font-weight", "bold");
+		return "Fair";
+	} else if (RTT < 100){
+		$('#'+rating).css("color", "#FF8C00", "font-weight","bold");
+		$('#'+rating).css("font-weight", "bold");
+		return "Poor";
+	} else {
+		$('#'+rating).css("color", "#FF0000");
+		$('#'+rating).css("font-weight", "bold");
+		return "Fail";
+	}
+}
+
+var imageCell = $("#imageCell")
+function ping_endpoint(url, onComplete) {
+    var randomString = Math.floor(Math.random()*0xFFFFFFFFFFFFFFFF).toString(36);
+    var targetUrl = url + "ping?x=" + randomString;
+    imageCell.empty();
+    imageCell.html("<img id='pingImage' style='display: none'>");
+    var pingImage = $("#pingImage");
+    pingImage.error(onComplete);
+    pingImage.attr("src", targetUrl);
+}
+
+$(document).ready(function(){
+	$("#startButton").click(getServers);
+
+});
+
+
+
+
+
+
+
+
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var cH;
+var cW;
+var bgColor = "#FF6138";
+var animations = [];
+var circles = [];
+
+var colorPicker = (function() {
+  var colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
+  var index = 0;
+  function next() {
+    index = index++ < colors.length-1 ? index : 0;
+    return colors[index];
+  }
+  function current() {
+    return colors[index]
+  }
+  return {
+    next: next,
+    current: current
+  }
+})();
+
+function removeAnimation(animation) {
+  var index = animations.indexOf(animation);
+  if (index > -1) animations.splice(index, 1);
+}
+
+function calcPageFillRadius(x, y) {
+  var l = Math.max(x - 0, cW - x);
+  var h = Math.max(y - 0, cH - y);
+  return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
+}
+
+function addClickListeners() {
+  document.addEventListener("touchstart", handleEvent);
+  document.addEventListener("mousedown", handleEvent);
+};
+
+function handleEvent(e) {
+    if (e.touches) { 
+      e.preventDefault();
+      e = e.touches[0];
+    }
+    var currentColor = colorPicker.current();
+    var nextColor = colorPicker.next();
+    var targetR = calcPageFillRadius(e.pageX, e.pageY);
+    var rippleSize = Math.min(200, (cW * .4));
+    var minCoverDuration = 750;
+    
+    var pageFill = new Circle({
+      x: e.pageX,
+      y: e.pageY,
+      r: 0,
+      fill: nextColor
+    });
+    var fillAnimation = anime({
+      targets: pageFill,
+      r: targetR,
+      duration:  Math.max(targetR / 2 , minCoverDuration ),
+      easing: "easeOutQuart",
+      complete: function(){
+        bgColor = pageFill.fill;
+        removeAnimation(fillAnimation);
+      }
+    });
+    
+    var ripple = new Circle({
+      x: e.pageX,
+      y: e.pageY,
+      r: 0,
+      fill: currentColor,
+      stroke: {
+        width: 3,
+        color: currentColor
+      },
+      opacity: 1
+    });
+    var rippleAnimation = anime({
+      targets: ripple,
+      r: rippleSize,
+      opacity: 0,
+      easing: "easeOutExpo",
+      duration: 900,
+      complete: removeAnimation
+    });
+    
+    var particles = [];
+    for (var i=0; i<32; i++) {
+      var particle = new Circle({
+        x: e.pageX,
+        y: e.pageY,
+        fill: currentColor,
+        r: anime.random(24, 48)
+      })
+      particles.push(particle);
+    }
+    var particlesAnimation = anime({
+      targets: particles,
+      x: function(particle){
+        return particle.x + anime.random(rippleSize, -rippleSize);
+      },
+      y: function(particle){
+        return particle.y + anime.random(rippleSize * 1.15, -rippleSize * 1.15);
+      },
+      r: 0,
+      easing: "easeOutExpo",
+      duration: anime.random(1000,1300),
+      complete: removeAnimation
+    });
+    animations.push(fillAnimation, rippleAnimation, particlesAnimation);
+}
+
+function extend(a, b){
+  for(var key in b) {
+    if(b.hasOwnProperty(key)) {
+      a[key] = b[key];
+    }
+  }
+  return a;
+}
+
+var Circle = function(opts) {
+  extend(this, opts);
+}
+
+Circle.prototype.draw = function() {
+  ctx.globalAlpha = this.opacity || 1;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+  if (this.stroke) {
+    ctx.strokeStyle = this.stroke.color;
+    ctx.lineWidth = this.stroke.width;
+    ctx.stroke();
+  }
+  if (this.fill) {
+    ctx.fillStyle = this.fill;
+    ctx.fill();
+  }
+  ctx.closePath();
+  ctx.globalAlpha = 1;
+}
+
+var animate = anime({
+  duration: Infinity,
+  update: function() {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, cW, cH);
+    animations.forEach(function(anim) {
+      anim.animatables.forEach(function(animatable) {
+        animatable.target.draw();
+      });
+    });
+  }
+});
+
+var resizeCanvas = function() {
+  cW = window.innerWidth;
+  cH = window.innerHeight;
+  c.width = cW * devicePixelRatio;
+  c.height = cH * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+};
+
+(function init() {
+  resizeCanvas();
+  if (window.CP) {
+    // CodePen's loop detection was causin' problems
+    // and I have no idea why, so...
+    window.CP.PenTimer.MAX_TIME_IN_LOOP_WO_EXIT = 6000; 
+  }
+  window.addEventListener("resize", resizeCanvas);
+  addClickListeners();
+  if (!!window.location.pathname.match(/fullcpgrid/)) {
+    startFauxClicking();
+  }
+  handleInactiveUser();
+})();
+
+function handleInactiveUser() {
+  var inactive = setTimeout(function(){
+    fauxClick(cW/2, cH/2);
+  }, 2000);
+  
+  function clearInactiveTimeout() {
+    clearTimeout(inactive);
+    document.removeEventListener("mousedown", clearInactiveTimeout);
+    document.removeEventListener("touchstart", clearInactiveTimeout);
+  }
+  
+  document.addEventListener("mousedown", clearInactiveTimeout);
+  document.addEventListener("touchstart", clearInactiveTimeout);
+}
+
+function startFauxClicking() {
+  setTimeout(function(){
+    fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
+    startFauxClicking();
+  }, anime.random(200, 900));
+}
+
+function fauxClick(x, y) {
+  var fauxClick = new Event("mousedown");
+  fauxClick.pageX = x;
+  fauxClick.pageY = y;
+  document.dispatchEvent(fauxClick);
+}
+
+
+</script>
+		
+		
+<footer>
+  <p class="textBox">3on3 Freestyle and all of its characters and likenesses are  JOYCITY Corporation</p>
+  <p class="textBox">Contact:<a 
+  >LetsMakeItWeird@psn (or dont....Forreal)</a>
+
+
+</body>
+</html>

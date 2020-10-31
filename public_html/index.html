@@ -28,7 +28,7 @@
         <ul id=btns>
             <li><a href="#section-b" class="btn" id="westButton">Ping West</a></li>
             <li><a href="#section-b" class="btn", id="eastButton">Ping East</a></li>
-			<li><a href="#section-b" class="btn", id="europeButton">Ping Europe</a></li>
+			<li><a href="#section-b" class="btn", id="europeButton">Ping Euro</a></li>
 			<li><a href="#section-b" class="btn", id="asiaButton">Ping Asia</a></li>
         </ul>
     </div>
@@ -79,7 +79,7 @@
         <section id="section-a" class="grid">
             <div class="content-wrap">
                 <h2 class="content-title">New Ping Site Changes</h2>
-                <p>I've received a lot of inquiry about latency fluctuating (natural) as well as details on people who could be fabricating about their ping. Hopefully the new graph feature and time stamps can help users deal with both of these issues. Additionally, if you don't like the new changes, the old websites are still up and running at <a href="http://3on3ping.com/version1">3on3ping.com/version1</a>, <a href="http://3on3ping.com/version2">3on3ping.com/version2</a>, and <a href="http://3on3ping.com/version3">3on3ping.com/version3</a> Enjoy!</p>
+                <p>I've received a lot of inquiry about latency fluctuating (natural) as well as details on people who could be fabricating about their ping. Hopefully the new graph feature and time stamps can help users deal with both of these issues. Additionally, if you don't like the new changes, the old websites are still up and running at <a href="http://3on3ping.com/version1.html">3on3ping.com/version1</a> and <a href="http://3on3ping.com/version2">3on3ping.com/version2</a> Enjoy!</p>
                 <br>
             </div>
         </section>
@@ -374,46 +374,56 @@
 //chart scripts for specific servers
 function loadDefaultServer(defaultServer) {
 	var url = "";
+	var tableLatency = "";
 	switch(defaultServer){
 				case "USEast": 
 					url = "http://dynamodb.us-east-1.amazonaws.com/";
+					tableLatency = ("eastLatency");
 					//console.log("set URL TO  EAST")
 					break;
 				case "USWest": 
 					url = "http://dynamodb.us-west-1.amazonaws.com/";
+					tableLatency = ("westLatency");
 					//console.log("set URL TO  WEST")
 					break;	
 				case "Asia 2": 
 					url = "http://dynamodb.ap-northeast-1.amazonaws.com/";
+					tableLatency = ("asiaLatency");
 					//console.log("set URL TO  ASIA")
 					break;
 				case "Europe": 
 					url = "http://dynamodb.eu-central-1.amazonaws.com/";
+					tableLatency = ("euLatency");
 					//console.log("set URL TO  EU")
 					break;
 			}
 	var pingCount;
 	for (pingCount = 0; pingCount <= 9; pingCount++){
 		setTimeout(function() { 
-			pingDefaultServer(url); updateChart(); }, 750 * pingCount); 
+			pingDefaultServer(url, tableLatency); updateChart(); }, 750 * pingCount); 
 	}
 	pingDefaultResponses = [];
 };
 
-function pingDefaultServer(url) {
+function pingDefaultServer(url,tableLatency) {
     var startTime = currentTimeMillis();
     ping_endpoint(url, function() {
-        finishDefaultPing(startTime, url);
+        finishDefaultPing(startTime, url, tableLatency);
     });
 };
 
-function finishDefaultPing(startTime, url) {
+function finishDefaultPing(startTime, url, tableLatency) {
     var endTime = currentTimeMillis();
     var RTT = endTime - startTime;
     pingDefaultResponses.push(RTT);
 	if (RTT < lowestMeasuredPing){
-		document.getElementById("minPingResult").innerHTML = RTT;
+		document.getElementById("minPingResult").innerHTML = RTT + " ms";
 		lowestMeasuredPing = RTT;
+		$('#' + tableLatency).html(RTT + " ms");
+		var newRating = tableLatency+"1";
+		//console.log(newRating);
+		$('#' + newRating).html(ratePing(RTT,newRating));
+		
 	}
 };
 

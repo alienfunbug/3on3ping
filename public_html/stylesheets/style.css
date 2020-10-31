@@ -61,7 +61,7 @@ p {
 
 #showcase .bg-image {
   position: absolute;
-  background: #333 url("1.gif");
+  background: #333 url("../images/1.gif");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
