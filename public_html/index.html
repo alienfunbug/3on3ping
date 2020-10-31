@@ -167,10 +167,7 @@
 	var date = new Date();
 	var lowestMeasuredPing = 9999;
 	
-	
-
 	window.onload = function(){
-
 };
 
 
@@ -277,8 +274,7 @@
 		$(next).html(RTToutput);
 		var rating = region+"1";	
 		$('#'+rating).html(ratePing(RTT,rating));
-		setTimeout(500); 
-		loadDefaultServer(homeServer);
+		setTimeout('loadDefaultServer(homeServer)',1000); 
 		pingResponses = [];
     	lowestMeasuredPing = 9999;
 		enableStartButton();
