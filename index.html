@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="./stylesheets/style.css"></link>
+	<title>3on3 Ping Calculator</title>
+	<meta name="description" 
+	content="3on3 Freestyle Ping Calculator: Calculates 3on3 Freestyle Ping since it is not included in the game."/>
+	<meta property="og:title" content="3on3 Ping Calculator: Helping you Get The Rebound" />
+	<meta property="og:url" content="http://3on3ping.com/" />
+	<meta property="og:image" content="http://3on3ping.com/images/wtfyl.jpg" />
+	<meta property="og:type" content="article" />
+	<meta property="og:description" content="This is a simple tool to let you know your ping and how it measures up against others." />
+	</head>
+<body>
+    
+    <!-- header showcase -->
+    <header id="showcase" class="grid">
+        <div class="bg-image"></div>
+        <div class="content-wrap">
+        <h1>3on3 Ping Calculator</h1>
+        <p>A thank you to <span style="color:#3cb371"> YuZ </span> and <span style="color:#3cb371"> Jeremy</span> for the donations, also a quick thank you to <span style="color:#3cb371"> Fret </span> some upcoming changes I shouldve already implemented -  Alienfunbug[LMIW]
+        </p>
+
+	<!-- Flex buttons -->
+        <ul id=btns>
+            <li><a href="#section-b" class="btn" id="westButton">Ping West(CA)</a></li>
+            <li><a href="#section-b" class="btn", id="eastButton">Ping East(VA)</a></li>
+			<li><a href="#section-b" class="btn", id="europeButton">Ping Euro(GER)</a></li>
+			<li><a href="#section-b" class="btn", id="asiaButton">Ping Asia(JPN)</a></li>
+        </ul>
+		
+    </div>
+    </header>
+
+	<!-- Result table -->
+	<!-- Timestamp -->
+	<p id="currentLocalTimeA"></p>
+    <div class="card">
+	<table id="pingTable" >
+		<tr>
+			<th>Server</th>
+			<th>Latency</th>
+			<th>Rating</th>
+		</tr>
+		<tr><!--USEAST-->
+			<td><span class ="strongText">US East</span></td>
+			<td class ="latency"  id="eastLatency" 
+			server="http://dynamodb.us-east-1.amazonaws.com/">Latency</td>
+			<td id="eastLatency1" >Rating</td>
+		</tr>		
+		<tr><!--USWEST-->
+			<td><span class ="strongText">US West</span></td>
+			<td class = "latency"  id="westLatency"
+			server="http://dynamodb.us-west-1.amazonaws.com/">Latency</td>
+			<!--http://dynamodb.us-west-2.amazonaws.com/-->
+			<td id="westLatency1" >Rating</td>
+		</tr>	
+		<tr><!--ASIA2-->
+			<td><span class ="strongText">Asia 2</span></td>
+			<td class = "latency"  id="asiaLatency"
+			server="http://dynamodb.ap-northeast-1.amazonaws.com/">Latency</td>
+			<td id="asiaLatency1" >Rating</td>
+		</tr>
+		<tr><!--EUROPE-->
+			<td><span class ="strongText">Europe</span></td>
+			<td class = "latency" id="euLatency"
+			server="http://dynamodb.eu-central-1.amazonaws.com/">Latency</td>
+			<td id="euLatency1" >Rating</td>
+			<td id='imageCell'></td>
+		</tr>
+    </table>
+</div>
+ 
+    <!-- main -->
+    <main id="main">
+    <!-- section a -->
+        <section id="section-a" class="grid">
+            <div class="content-wrap">
+                <h2 class="content-title">New Ping Site Changes</h2>
+                <p>I've received a lot of inquiry about latency fluctuating (natural) as well as details on people who could be fabricating about their ping. Hopefully the new graph feature and time stamps can help users deal with both of these issues. Additionally, if you don't like the new changes, the old websites are still up and running at <a href="http://3on3ping.com/version1">3on3ping.com/version1</a> and <a href="http://3on3ping.com/version2">3on3ping.com/version2</a> Enjoy!</p>
+                <br>
+            </div>
+        </section>
+
+    <!-- section b -->
+    <section id="section-b" class="grid">
+        <ul>
+            <li>
+                <div class="card">
+                    <div class="card-content">
+                    <h3 class="card-title" id="homeServer"> Pinging Server:  <span id = "homeServerDetail" span style="color:#3cb371" > </span> </h3>
+					<p>This chart navigates to the lowest ping response server. Ping responses are displayed over approximately a ten second period for a more accurate depiction of your latency. If you feel that it pulled the wrong server in error, please rerun the ping test.</p>
+					<p id="currentLocalTimeB"></p>
+                    <div class="card">
+                    <canvas id="myChart"></canvas>
+                    </div>
+                    <h3 id="minPing" >Mininum Ping: <span id="minPingResult" span style="color:#3cb371" ></span></h3> 
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- section c -->
+    <section id="section-c" class="grid">
+        <div class="content-wrap">
+            	<h2 class="content-title"> Ping Warrior Action BB</h2>
+          		  <p> It wouldn't be right to have this website online without having at least one ridiculous 3on3 image. Thanks to DJMA the ping lord, enjoy this photo of Christa(C) Getting Outrebounded by Kim(SG). Max clearly wanted no part of this action.
+            	  <h3 class="card-title"> Kim(SG)  vs. Christa(C)</h3>
+				  <img src="./images/pingSnag.jpg" alt="Shooting Guard outrebounding Center">
+				</p>
+        </div>
+	</section>
+	
+	<!-- section d -->
+    <section id="section-d" class="grid">
+        <div class="box">
+           		<h2 class="content-title">Contact Me</h2>
+				   <p>If you have any questions or concerns, feel free to contact me via PSN at LetsMakeItWeird (though I no longer even play Playstation). It's been fun guys! Thanks for stopping by!
+				</p>
+		</div>  
+		
+	<!-- about website -->
+        <div class="box">
+            	<h2 class="content-title">About This Website</h2>
+            		<p>October 10th 2021, this website will be shutting down. Thanks everyone for stopping by.
+				</p>
+            <br>
+
+        </div>
+        <br>    
+    </section>
+    	<div class="box">
+		</div>        
+	</main>
+    
+
+    <!-- footer -->
+<footer id="main-footer" class="grid">
+    <div> 3on3ping calculator</div>
+    <div>By Alienfunbug</a></div>
+</footer>
+
+
+
+ <!-- scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript" src="./dependancies/jquery-1.7.1.min.js"></script>
+
+<script>
+	var westButton = $("#westButton");
+	var eastButton = $("#eastButton");
+	var europeButton = $("europeButton");
+	var asiaButton = $("#asiaButton");
+	//var startButton = $("#startButton"); temporarily removed
+	var pingResponses = [];
+	var pingDefaultResponses = [];
+	var homeServer = "";
+	var date = new Date();
+	var lowestMeasuredPing = 9999;
+	
+	window.onload = function(){
+};
+
+
+
+	//prevent spam pings
+	function disableStartButton(){
+		//startButton.attr("disabled", "disabled");
+		westButton.attr("disabled", "disabled");
+		eastButton.attr("disabled", "disabled");
+		europeButton.attr("disabled", "disabled");
+		asiaButton.attr("disabled", "disabled");
+	};
+
+	// enable button
+	function enableStartButton(){
+		//startButton.removeAttr("disabled");
+		westButton.removeAttr("disabled");
+		eastButton.removeAttr("disabled");
+		europeButton.removeAttr("disabled");
+		asiaButton.removeAttr("disabled");
+	};
+	
+	//get start and end time
+	function currentTimeMillis(){
+		return (new Date()).getTime();
+	};
+
+	//credit to Mike Leonhard for image RTT technique
+	function pingWest(){
+		disableStartButton();
+		var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+		homeServer = "USWest";
+		$("#westLatency1").text("Cleared"); $("#westLatency1").css("color", "Gray");
+		var serverInfo = $("#westLatency");
+		loadNextServer(serverInfo)
+		document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	}
+
+	function pingEast(){
+		disableStartButton();
+		var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+		homeServer = "USEast";
+		$("#eastLatency1").text("Cleared"); $("#eastLatency1").css("color", "Gray");
+		var serverInfo = $("#eastLatency");
+		loadNextServer(serverInfo)
+		document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	}
+
+	function pingEurope(){
+		disableStartButton();
+		var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+		homeServer = "Europe";
+		$("#euLatency1").text("Cleared"); $("#euLatency1").css("color", "Gray");
+		var serverInfo = $("#euLatency");
+		loadNextServer(serverInfo)
+		document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	}
+
+	function pingAsia(){
+		disableStartButton();
+		var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+		homeServer = "Asia 2";
+		$("#asiaLatency1").text("Cleared"); $("#asiaLatency1").css("color", "Gray");
+		var serverInfo = $("#asiaLatency");
+		loadNextServer(serverInfo)
+		document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	}
+
+
+
+	function loadNextServer(serverInfo){
+		var next = serverInfo;
+			var region = serverInfo.attr("id");
+			var url = serverInfo.attr("server");
+			connecting(next, region, url, serverInfo);
+	};
+	
+	function connecting(next, region, url, serverInfo) {
+		$(next).html("connecting");
+			pingServers(next, region, url, serverInfo);
+	};
+
+	function pingServers(next, region, url, serverInfo){
+		$(next).html("pinging");
+		var startTime = currentTimeMillis();
+		ping_endpoint(url, function(){
+			finishPing(startTime, next, region, url, serverInfo);
+		});
+	};
+
+	function finishPing(startTime, next, region, url, serverInfo){
+		var endTime = currentTimeMillis();
+		var RTT = endTime - startTime;
+		pingResponses.push(RTT);
+		var RTToutput = "" + RTT + " ms";
+		$(next).html(RTToutput);
+		var rating = region+"1";	
+		$('#'+rating).html(ratePing(RTT,rating));
+		setTimeout('loadDefaultServer(homeServer)',1000); 
+		pingResponses = [];
+    	lowestMeasuredPing = 9999;
+		enableStartButton();
+	};
+	
+	function ratePing(RTT,rating){
+	if (RTT < 29){
+		  $('#'+rating).css("color", "#0000FF", "font-weight","bold");
+		  $('#'+rating).css("font-weight", "bold");
+		  return "Perfect";
+	}
+	else if (RTT < 39){
+		  $('#'+rating).css("color", "#00FF00", "font-weight","bold");
+		  $('#'+rating).css("font-weight", "bold");
+		  return "Good";
+	  } else if (RTT < 56){
+		  $('#'+rating).css("color", "#D4AF37", "font-weight","bold");
+		  $('#'+rating).css("font-weight", "bold");
+		  return "Fair";
+	  } else if (RTT < 100){
+		  $('#'+rating).css("color", "#FF8C00", "font-weight","bold");
+		  $('#'+rating).css("font-weight", "bold");
+		  return "Poor";
+	  } else {
+		  $('#'+rating).css("color", "#FF0000");
+		  $('#'+rating).css("font-weight", "bold");
+		  return "Fail";
+	  }
+  }
+
+	var imageCell = $("#imageCell")
+	function ping_endpoint(url, onComplete) {
+	    var randomString = Math.floor(Math.random()*0xFFFFFFFFFFFFFFFF).toString(36);
+	    var targetUrl = url + "ping?x=" + randomString;
+	    imageCell.empty();
+	    imageCell.html("<img id='pingImage' style='display: none'>");
+	    var pingImage = $("#pingImage");
+	    pingImage.error(onComplete);
+	    pingImage.attr("src", targetUrl);
+	}
+	
+	$(document).ready(function(){
+
+		$("#westButton").click(function(e){
+            var linkHref = $(this).attr("href");
+            e.preventDefault();
+            pingWest();
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            400);
+         });
+
+		 $("#eastButton").click(function(e){
+            var linkHref = $(this).attr("href");
+            e.preventDefault();
+            pingEast();
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            400);
+         });
+
+		 $("#europeButton").click(function(e){
+            var linkHref = $(this).attr("href");
+            e.preventDefault();
+            pingEurope();
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            400);
+         });
+
+		 $("#asiaButton").click(function(e){
+            var linkHref = $(this).attr("href");
+            e.preventDefault();
+            pingAsia();
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            400);
+         });
+	});
+	
+//chart scripts for specific servers
+function loadDefaultServer(defaultServer) {
+	var url = "";
+	var tableLatency = "";
+	switch(defaultServer){
+				case "USEast": 
+					url = "http://dynamodb.us-east-1.amazonaws.com/";
+					tableLatency = ("eastLatency");
+					//console.log("set URL TO  EAST")
+					break;
+				case "USWest": 
+					url = "http://dynamodb.us-west-1.amazonaws.com/";
+					tableLatency = ("westLatency");
+					//console.log("set URL TO  WEST")
+					break;	
+				case "Asia 2": 
+					url = "http://dynamodb.ap-northeast-1.amazonaws.com/";
+					tableLatency = ("asiaLatency");
+					//console.log("set URL TO  ASIA")
+					break;
+				case "Europe": 
+					url = "http://dynamodb.eu-central-1.amazonaws.com/";
+					tableLatency = ("euLatency");
+					//console.log("set URL TO  EU")
+					break;
+			}
+	var pingCount;
+	for (pingCount = 0; pingCount <= 9; pingCount++){
+		setTimeout(function() { 
+			pingDefaultServer(url, tableLatency); updateChart(); }, 750 * pingCount); 
+	}
+	pingDefaultResponses = [];
+};
+
+function pingDefaultServer(url,tableLatency) {
+    var startTime = currentTimeMillis();
+    ping_endpoint(url, function() {
+        finishDefaultPing(startTime, url, tableLatency);
+    });
+};
+
+function finishDefaultPing(startTime, url, tableLatency) {
+    var endTime = currentTimeMillis();
+    var RTT = endTime - startTime;
+    pingDefaultResponses.push(RTT);
+	if (RTT < lowestMeasuredPing){
+		document.getElementById("minPingResult").innerHTML = RTT + " ms";
+		lowestMeasuredPing = RTT;
+		$('#' + tableLatency).html(RTT + " ms");
+		var newRating = tableLatency+"1";
+		//console.log(newRating);
+		$('#' + newRating).html(ratePing(RTT,newRating));
+		
+	}
+};
+
+//start graphing
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+    // The data for our dataset
+    data: {
+        labels: ['ping 0','ping 1','ping 2','ping 3','ping 4', 'ping 5', 'ping 6', 'ping 7', 'ping 8', 'ping 9'],
+        datasets: [{
+            label: 'Ping Results',
+            backgroundColor: '#fff',
+            borderColor: '#eaeaea',
+			fill: false,
+            data: [],
+        }]
+    },
+    // Configuration options go here
+    options: {
+		responsive: true,
+              scales: {
+                  yAxes: [{
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Ping  (ms)',
+                      }
+                  }]
+              }
+	}
+});
+
+function updateChart() {
+	chart.data.datasets[0].data = pingDefaultResponses;
+	setTimeout(() => { chart.update(); }, 1000);
+}
+
+</script>	
+
+</body>
+</html>
