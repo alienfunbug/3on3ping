@@ -25,12 +25,13 @@
         </p>
 
 	<!-- Flex buttons -->
-        <ul id=btns>
-            <li><a href="#section-b" class="btn" id="westButton">Ping West(CA)</a></li>
-            <li><a href="#section-b" class="btn", id="eastButton">Ping East(VA)</a></li>
-			<li><a href="#section-b" class="btn", id="europeButton">Ping Euro(GER)</a></li>
-			<li><a href="#section-b" class="btn", id="asiaButton">Ping Asia(JPN)</a></li>
-        </ul>
+	<ul id=btns>
+		<li><a href="#section-b" class="btn" id="westButton">Ping West</a></li>
+		<li><a href="#section-b" class="btn", id="eastButton">Ping East</a></li>
+		<li><a href="#section-b" class="btn", id="centralButton">Ping Central</a></li>
+		<li><a href="#section-b" class="btn", id="europeButton">Ping Euro</a></li>
+		<li><a href="#section-b" class="btn", id="asiaButton">Ping Asia</a></li>
+	</ul>
 		
     </div>
     </header>
@@ -57,6 +58,13 @@
 			server="http://dynamodb.us-west-1.amazonaws.com/">Latency</td>
 			<!--http://dynamodb.us-west-2.amazonaws.com/-->
 			<td id="westLatency1" >Rating</td>
+		</tr>	
+			<tr><!--USCENTRAL-->
+			<td><span class ="strongText">US Central</span></td>
+			<td class = "latency"  id="centralLatency"
+			server="http://dynamodb.us-east-2.amazonaws.com/">Latency</td>
+			<!--http://dynamodb.us-east-2.amazonaws.com/-->
+			<td id="centralLatency1" >Rating</td>
 		</tr>	
 		<tr><!--ASIA2-->
 			<td><span class ="strongText">Asia 2</span></td>
@@ -153,6 +161,7 @@
 <script>
 	var westButton = $("#westButton");
 	var eastButton = $("#eastButton");
+	var centralButton = $("#centralButton");
 	var europeButton = $("europeButton");
 	var asiaButton = $("#asiaButton");
 	//var startButton = $("#startButton"); temporarily removed
@@ -172,6 +181,7 @@
 		//startButton.attr("disabled", "disabled");
 		westButton.attr("disabled", "disabled");
 		eastButton.attr("disabled", "disabled");
+		centralButton.attr("disabled", "disabled");
 		europeButton.attr("disabled", "disabled");
 		asiaButton.attr("disabled", "disabled");
 	};
@@ -181,6 +191,7 @@
 		//startButton.removeAttr("disabled");
 		westButton.removeAttr("disabled");
 		eastButton.removeAttr("disabled");
+		centralButton.removeAttr("disabled");
 		europeButton.removeAttr("disabled");
 		asiaButton.removeAttr("disabled");
 	};
@@ -211,6 +222,18 @@
 		homeServer = "USEast";
 		$("#eastLatency1").text("Cleared"); $("#eastLatency1").css("color", "Gray");
 		var serverInfo = $("#eastLatency");
+		loadNextServer(serverInfo)
+		document.getElementById('homeServerDetail').innerHTML =  homeServer;
+	}
+
+	function pingCentral(){
+		disableStartButton();
+		var currentTime = date.toLocaleString();
+    document.getElementById("currentLocalTimeA").innerHTML = currentTime;
+    document.getElementById("currentLocalTimeB").innerHTML = currentTime;
+		homeServer = "USCentral";
+		$("#centralLatency1").text("Cleared"); $("#centralLatency1").css("color", "Gray");
+		var serverInfo = $("#centralLatency");
 		loadNextServer(serverInfo)
 		document.getElementById('homeServerDetail').innerHTML =  homeServer;
 	}
@@ -339,6 +362,18 @@
             400);
          });
 
+		 $("#centralButton").click(function(e){
+            var linkHref = $(this).attr("href");
+            e.preventDefault();
+            pingCentral();
+            setTimeout(
+            function() {
+                $("html, body").animate({
+                scrollTop: $(linkHref).offset().top
+            }, 2000);
+            },
+            400);
+         });
 		 $("#europeButton").click(function(e){
             var linkHref = $(this).attr("href");
             e.preventDefault();
@@ -381,6 +416,13 @@ function loadDefaultServer(defaultServer) {
 					tableLatency = ("westLatency");
 					//console.log("set URL TO  WEST")
 					break;	
+
+
+				case "USCentral": 
+					url = "http://dynamodb.us-east-2.amazonaws.com/";
+					tableLatency = ("centralLatency");
+					//console.log("set URL TO  CENTRAL")
+					break;			
 				case "Asia 2": 
 					url = "http://dynamodb.ap-northeast-1.amazonaws.com/";
 					tableLatency = ("asiaLatency");
